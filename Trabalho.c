@@ -22,9 +22,11 @@ int main(){
         printf("[5] Sair do sistema\n");
 
         printf("Digite uma opcao: ");
-        scanf("%d", &opcao);
 
-    
+        while (scanf("%d", &opcao) != 1 || opcao < 1 || opcao > 5){
+            printf("Opcao invalida.\nDigite um numero de 1 a 5: ");
+            scanf("%*s");
+        }
 
     switch (opcao) {
 
@@ -34,13 +36,13 @@ int main(){
             scanf("%d", &codigo[i]);
 
             printf("Digite o nome do produto: ");
-            scanf("%s", &nome);
+            scanf("%s", &nome[i]);
 
             printf("Digite o preco do produto: R$");
-            scanf("%f", &preco);
+            scanf("%f", &preco[i]);
 
             printf("Digite a quantidade: ");
-            scanf("%d", &quantidade);
+            scanf("%d", &quantidade[i]);
 
             i++;
 
@@ -54,37 +56,50 @@ int main(){
 
     case 2: // Consultar produtos
         printf("Digite o codigo do produto: ");
-        scanf("%d", &codigo_consulta);
 
-        for (int j = 0; j < i; j++){
-            if (codigo[j] == codigo_consulta) {
+        while (scanf("%d", &codigo_consulta) != 1 || codigo_consulta < 0){
+            printf("Codigo invalido.\nDigite um codigo valido: ");
+            scanf("%*s");
+        }
+        encontrou = 0;
+
+        for(int j = 0; j < i; j++){
+            if (codigo[j] == codigo_consulta){
                 encontrou = 1;
+
+                printf("Produto encontrado\n");
+                printf("Codigo: %d\n", &codigo[j]);
+                printf("Nome: %s\n", &nome[j]);
+                printf("Preco: %.2f\n", &preco[j]);
+                printf("Quantidade: %d\n", &quantidade[j]);
                 break;
             }
         }
-        if (encontrou == 1) {
-            printf("Produto encontrado");
-        } else {
-            printf("Produto nao encontrado");
+        if (encontrou == 0) {
+            printf("Produto nao encontrado\n");
         }
         
         break;
     
     case 3: // Verificar estoque
-        if (quantidade == 0) {
+
+        for (int j = 0; j < i; j++){
+            if (quantidade[j] == 0) {
             printf ("ESTOQUE ESGOTADO\n");
-        } else if (quantidade <= 5) {
-            printf ("ESTOQUE BAIXO\n");
-        } else {
-            printf("ESTOQUE NORMAL\n");
+            } else if (quantidade[j] <= 5) {
+                printf ("ESTOQUE BAIXO\n");
+            } else {
+                printf("ESTOQUE NORMAL\n");
+            }
         }
+        
         break;
     
     case 4:{// Calculo
         float total = 0;
 
         for (int j = 0; j < i; j++){
-            total += preco [j] * quantidade [i];
+            total += preco [j] * quantidade [j];
         }
         printf("Valor total do estoque: R$ %.2f\n", total);
         break;
