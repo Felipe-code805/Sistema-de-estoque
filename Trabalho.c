@@ -31,25 +31,53 @@ int main(){
     switch (opcao) {
 
     case 1: // cadastro
+        continuar = 1;
         do {
+            if (i >= 100){
+                printf("Estoque cheio.\n");
+                break;
+            }
             printf("Digite o codigo do produto: ");
-            scanf("%d", &codigo[i]);
+            while (scanf("%d", &codigo[i])!= 1 || codigo[i] < 0){
+                printf("Codigo invalido.\nDigite um codigo valido: ");
+                scanf("%*s");
+            }
+
+            encontrou = 0;
+            for (int j = 0; j < i; j++){
+                if(codigo[j] == codigo [i]){
+                    encontrou = 1;
+                    break;
+                }
+            }
+            if (encontrou == 1){
+                printf("Codigo ja cadastrado.\n");
+                continue;
+            }
 
             printf("Digite o nome do produto: ");
-            scanf("%s", &nome[i]);
+            scanf("%s", nome[i]);
 
             printf("Digite o preco do produto: R$");
-            scanf("%f", &preco[i]);
+            while (scanf("%f", &preco[i]) != 1 || preco[i] < 0){
+                printf("Preco invalido.\nDigite um preco valido: R$");
+                scanf("%*s");
+            }
 
             printf("Digite a quantidade: ");
-            scanf("%d", &quantidade[i]);
+            while (scanf("%d", &quantidade[i]) != 1 || quantidade[i] < 0){
+                printf("Quantidade invalida.\nDigite uma quantidade valida: ");
+                scanf("%*s");
+            }
 
             i++;
 
             printf("Digite 1 para cadastrar outro produto\n");
             printf("Digite 0 para retornar ao menu\n");
-
-            scanf("%d", &continuar);
+            while (scanf("%d", &continuar) != 1){
+                printf("Entrada invalida.\nDigite 1 ou 0: ");
+                scanf("%*s");
+            }
 
         } while (continuar == 1);
         break;
@@ -68,10 +96,10 @@ int main(){
                 encontrou = 1;
 
                 printf("Produto encontrado\n");
-                printf("Codigo: %d\n", &codigo[j]);
-                printf("Nome: %s\n", &nome[j]);
-                printf("Preco: %.2f\n", &preco[j]);
-                printf("Quantidade: %d\n", &quantidade[j]);
+                printf("Codigo: %d\n", codigo[j]);
+                printf("Nome: %s\n", nome[j]);
+                printf("Preco: %.2f\n", preco[j]);
+                printf("Quantidade: %d\n", quantidade[j]);
                 break;
             }
         }
@@ -82,10 +110,15 @@ int main(){
         break;
     
     case 3: // Verificar estoque
-
+        if (i == 0){
+            printf("Nenhum produto cadastrado.\n");
+            break;
+        }
+        
         for (int j = 0; j < i; j++){
+            printf("Produto: %s\n", nome[j]);
             if (quantidade[j] == 0) {
-            printf ("ESTOQUE ESGOTADO\n");
+                printf ("ESTOQUE ESGOTADO\n");
             } else if (quantidade[j] <= 5) {
                 printf ("ESTOQUE BAIXO\n");
             } else {
@@ -98,6 +131,11 @@ int main(){
     case 4:{// Calculo
         float total = 0;
 
+        if (i == 0){
+            printf("Nenhum produto cadastrado.\n");
+            break;
+        }
+
         for (int j = 0; j < i; j++){
             total += preco [j] * quantidade [j];
         }
@@ -107,7 +145,7 @@ int main(){
 
     case 5:
         // Sair do sistema
-        printf("Saindo do sistema...");
+        printf("Saindo do sistema...\n");
         break;
 
     default:
