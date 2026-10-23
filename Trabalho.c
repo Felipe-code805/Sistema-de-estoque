@@ -1,5 +1,5 @@
 #include <stdio.h>
-
+                        //cometario teste
 int main() {
     int opcao = 0;
     int codigo[100];
