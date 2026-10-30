@@ -101,4 +101,6 @@ gabriel.santos.gjs@outlook.com
 
 [GitHub](https://github.com/gabrieljdsantos)
 
+[Dev.to](https://dev.to/gabriel_jdsantos).
+
 ```Linguagem C```
